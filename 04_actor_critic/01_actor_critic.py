@@ -1,6 +1,10 @@
+# encoding: utf-8
 """
+强化学习中的一种结合体 Actor Critic (演员评判家), 它合并了 以值为基础 (比如 Q learning) 和
+以动作概率为基础 (比如 Policy Gradients) 两类强化学习算法.
 
 https://github.com/pytorch/examples/blob/master/reinforcement_learning/actor_critic.py
+https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-1-A-AC/
 
 """
 import argparse
@@ -27,9 +31,12 @@ parser.add_argument('--render', action='store_true',
 parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                     help='interval between training status logs (default: 10)')
 args = parser.parse_args()
+print(args)
+''' Namespace(gamma=0.99, log_interval=10, render=False, seed=543) '''
 
 
 env = gym.make('CartPole-v0')
+env = env.unwrapped
 env.seed(args.seed)
 torch.manual_seed(args.seed)
 
@@ -96,7 +103,7 @@ def main():
         state = env.reset()
         for t in range(10000):  # Don't infinite loop while learning
             action = select_action(state)
-            state, reward, done, _ = env.step(action)
+            state, reward, done, info = env.step(action)
             if args.render:
                 env.render()
             model.rewards.append(reward)
