@@ -4,6 +4,10 @@ Dependencies:
 torch: 0.3
 gym: 0.8.1
 numpy
+
+TODO 学习参考这种写法，优化结构，并加入训练和测试
+https://github.com/CFOnHeart/ReforceLearning/blob/master/DQN/MountainCar_DQN.py
+
 """
 import torch
 from torch.autograd import Variable
